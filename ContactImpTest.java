@@ -40,6 +40,7 @@ public class ContactImpTest {
 		assertEquals(expected, a.getNotes());
 	}
 
+	// Test for method addNotes().
 	@Test
 	public void testAddNotes() {
 		Contact a = new ContactImp("Noam");
