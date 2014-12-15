@@ -16,7 +16,9 @@ public class MeetingImpTest {
 	Contact b;
 	
 
-	// This method create instances of objects to be use on the tests.
+	/**
+	 *  This method create instances of objects to be use on the tests.
+	 */
 	@Before
 	public void CreateForTest() {
 		a = new ContactImp("Noam");
@@ -38,6 +40,9 @@ public class MeetingImpTest {
 		assertNotEquals(first.getId(), second.getId());
 	}
 
+	/** 
+	 * Test for method getDate().
+	 */
 	@Test
 	public void testGetDate() {
 		Calendar expected = Calendar.getInstance();
@@ -45,6 +50,9 @@ public class MeetingImpTest {
 		assertEquals(expected, first.getDate());
 	}
 
+	/**
+	 * Test for method getContact().
+	 */
 	@Test
 	public void testGetContacts() {
 		Set<Contact> expected = new TreeSet<Contact>();
@@ -55,9 +63,7 @@ public class MeetingImpTest {
 			e.getStackTrace();
 		}
 		assertEquals(expected, second.getContacts());
-		assertEquals(expected, first.getContacts());
-		
-		
+		assertEquals(expected, first.getContacts());	
 	}
 
 }

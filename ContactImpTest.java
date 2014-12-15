@@ -3,13 +3,17 @@ package Cw4;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-
+/**
+ * 
+ * @author Noam
+ * Test Class for class ContactImp.
+ *
+ */
 public class ContactImpTest {
-	/*
-	 * This class test  interface Contact.
-	 */
 	
-    // Test for method getId().
+    /** 
+     * Test for method getId().
+     */
 	@Test
 	public void testGetId() {
 		Contact a = new ContactImp("Noam");
@@ -19,7 +23,9 @@ public class ContactImpTest {
 		assertNotSame(a.getId(), c.getId());
 	}
 
-	// Test for method getName().
+	/** 
+	 * Test for method getName().
+	 */
 	@Test
 	public void testGetName() {
 		Contact a = new ContactImp("Noam");
@@ -30,7 +36,9 @@ public class ContactImpTest {
 		assertNotNull(c.getName());
 	}
 
-	// Test for method getNotes().
+	/** 
+	 * Test for method getNotes().
+	 */
 	@Test
 	public void testGetNotes() {
 		Contact a = new ContactImp("Noam");
@@ -40,7 +48,9 @@ public class ContactImpTest {
 		assertEquals(expected, a.getNotes());
 	}
 
-	// Test for method addNotes().
+	/** 
+	 * Test for method addNotes().
+	 */
 	@Test
 	public void testAddNotes() {
 		Contact a = new ContactImp("Noam");

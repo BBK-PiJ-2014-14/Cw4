@@ -3,7 +3,10 @@ package Cw4;
 import java.util.ArrayList;
 import java.util.List;
 
-// This class implements the interface Contact.
+/**
+ * This class implements the interface Contact.
+ * @author Noam
+ */
 public class ContactImp implements Contact {
 	private String name;
 	private int iD;
@@ -11,7 +14,9 @@ public class ContactImp implements Contact {
 	private static int contactNum = 1;
 	
 	
-	// Constructor 
+	/** 
+	 * Constructor 
+	 */
 	public ContactImp(String name) {
 		this.name = name;
 		this.iD = contactNum;
@@ -19,20 +24,29 @@ public class ContactImp implements Contact {
 		this.notes = new ArrayList<String>();
 	}
 
-	// this method return the ID of the contact.
+	/**0
+	 *  This method return the ID of the contact.
+	 *  @return the Id of the contact.
+	 */
 	@Override
 	public int getId() {
 		return iD;
 		
 	}
 
-	// This method return the name of the contact.
+	/** 
+	 * This method return the name of the contact.
+	 * @return the name of the contact.
+	 */
 	@Override
 	public String getName() {
 		return name;
 	}
    
-	// This method return a string of notes refers to the contact or return an empty string if there aren't any. 
+	/** 
+	 * This method return a string of notes refers to the contact or return an empty string if there aren't any. 
+	 * @return string of notes or empty string if there aren't any.
+	 */
 	@Override
 	public String getNotes() {
 		String result = "";
@@ -45,7 +59,9 @@ public class ContactImp implements Contact {
 
 	}
 
-	// This method add a note about the contact.
+	/**
+	 * This method add a note about the contact.
+	 */
 	@Override
 	public void addNotes(String note) {
 		notes.add(note);

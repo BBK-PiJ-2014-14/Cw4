@@ -1,9 +1,8 @@
 package Cw4;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Noam
@@ -15,40 +14,54 @@ public class MeetingImp implements Meeting {
 	private static int meetingNum = 1;
 	private int iD;
 	private Calendar date;
-	private Contact[] participents;
+	private Contact[] participants;
 	
 	
-	// Constructor
-	public MeetingImp(Calendar date, Contact... participent) {
+	/** 
+	 * Constructor
+	 * @param date
+	 * @param participant
+	 */
+	public MeetingImp(Calendar date, Contact... participant) {
 		this.iD = meetingNum;
 		meetingNum++;
 		this.date = date;
-		this.participents = participent;	
-		
+		this.participants = participant;		
 	}
 	
-
-
-
-	
+	/**
+	 * This method return the ID of the meeting.
+	 * @return the meeting's ID.
+	 */
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return iD;
 	}
 
-	
+	/**
+	 * This method return A calendar object set to the date of the meeting.
+	 * @return the calendar of the meeting.
+	 */
 	@Override
 	public Calendar getDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return date;
 	}
 
-	
+	/**
+	 * This method return a set of contact participating in this meeting.
+	 * @return a set of contact participating in this meeting.
+	 */
 	@Override
 	public Set<Contact> getContacts() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Contact> result = new TreeSet<Contact>();
+		try {
+			for(int i = 0; i < participants.length; i++) {
+		    	result.add(participants[i]);
+	    	}
+		} catch(ClassCastException e) {
+			e.getStackTrace();
+		}
+		return result;
 	}
 
 }
