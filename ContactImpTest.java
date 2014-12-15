@@ -33,12 +33,24 @@ public class ContactImpTest {
 	// Test for method getNotes().
 	@Test
 	public void testGetNotes() {
-		fail("Not yet implemented");
+		Contact a = new ContactImp("Noam");
+		assertNotNull(a.getNotes());
+		a.addNotes("This is me");
+		String expected = "[This is me]";
+		assertEquals(expected, a.getNotes());
 	}
 
 	@Test
 	public void testAddNotes() {
-		fail("Not yet implemented");
+		Contact a = new ContactImp("Noam");
+		String expected = "";
+		assertEquals(expected, a.getNotes());
+		a.addNotes("The guy from MScCs");
+		expected = "[The guy from MScCs]";
+		assertEquals(expected, a.getNotes());
+		a.addNotes("Must meet soon");	
+		expected = "[The guy from MScCs][Must meet soon]";
+		assertEquals(expected, a.getNotes());
 	}
 
 }
