@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class ContactManagerTest {
+public class ContactManagerImplTest {
 
 	@Test
 	public void testAddFutureMeeting() {

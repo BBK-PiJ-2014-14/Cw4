@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MeetingImpTest {
+public class MeetingImplTest {
 	Meeting first;
 	Meeting second;
 	Contact a;
@@ -21,14 +21,14 @@ public class MeetingImpTest {
 	 */
 	@Before
 	public void CreateForTest() {
-		a = new ContactImp("Noam");
-		b = new ContactImp("Daniel");
+		a = new ContactImpl("Noam");
+		b = new ContactImpl("Daniel");
 		Calendar c = Calendar.getInstance();
 		c.set(2015, 10, 1, 10, 50);
 		Calendar d = Calendar.getInstance();
 		d.set(2014, 12, 31, 23, 59);
-		first = new MeetingImp(c, a);
-		second = new MeetingImp(d, a, b);	
+		first = new MeetingImpl(c, a);
+		second = new MeetingImpl(d, a, b);	
 	}
 	
     /**

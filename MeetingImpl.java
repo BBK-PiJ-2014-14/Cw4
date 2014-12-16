@@ -8,13 +8,15 @@ import java.util.TreeSet;
  * @author Noam
  *This class implements the interface Meeting. 
  *It has a static field meetingNum which produce a unique ID for each Meeting.
+ *It has a String field note to keep notes about the meeting.
  *It has also other fields as required by the interface. 
  */
-public class MeetingImp implements Meeting {
+public class MeetingImpl implements Meeting {
 	private static int meetingNum = 1;
 	private int iD;
 	private Calendar date;
 	private Contact[] participants;
+	private String note;
 	
 	
 	/** 
@@ -22,7 +24,7 @@ public class MeetingImp implements Meeting {
 	 * @param date
 	 * @param participant
 	 */
-	public MeetingImp(Calendar date, Contact... participant) {
+	public MeetingImpl(Calendar date, Contact... participant) {
 		this.iD = meetingNum;
 		meetingNum++;
 		this.date = date;

@@ -7,7 +7,7 @@ import java.util.List;
  * This class implements the interface Contact.
  * @author Noam
  */
-public class ContactImp implements Contact {
+public class ContactImpl implements Contact {
 	private String name;
 	private int iD;
 	private List<String> notes;
@@ -17,10 +17,10 @@ public class ContactImp implements Contact {
 	/** 
 	 * Constructor 
 	 */
-	public ContactImp(String name) {
+	public ContactImpl(String name) {
 		this.name = name;
 		this.iD = contactNum;
-		ContactImp.contactNum++;
+		ContactImpl.contactNum++;
 		this.notes = new ArrayList<String>();
 	}
 

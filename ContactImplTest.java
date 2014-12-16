@@ -9,16 +9,16 @@ import org.junit.Test;
  * Test Class for class ContactImp.
  *
  */
-public class ContactImpTest {
+public class ContactImplTest {
 	
     /** 
      * Test for method getId().
      */
 	@Test
 	public void testGetId() {
-		Contact a = new ContactImp("Noam");
-		Contact b = new ContactImp("Daniel");
-		Contact c = new ContactImp("Noam");
+		Contact a = new ContactImpl("Noam");
+		Contact b = new ContactImpl("Daniel");
+		Contact c = new ContactImpl("Noam");
 		assertNotSame(a.getId(), b.getId());
 		assertNotSame(a.getId(), c.getId());
 	}
@@ -28,9 +28,9 @@ public class ContactImpTest {
 	 */
 	@Test
 	public void testGetName() {
-		Contact a = new ContactImp("Noam");
-		Contact b = new ContactImp("Daniel");
-		Contact c = new ContactImp("");
+		Contact a = new ContactImpl("Noam");
+		Contact b = new ContactImpl("Daniel");
+		Contact c = new ContactImpl("");
 		assertNotSame(a.getName(), b.getName());
 		assertNotNull(a.getName());
 		assertNotNull(c.getName());
@@ -41,7 +41,7 @@ public class ContactImpTest {
 	 */
 	@Test
 	public void testGetNotes() {
-		Contact a = new ContactImp("Noam");
+		Contact a = new ContactImpl("Noam");
 		assertNotNull(a.getNotes());
 		a.addNotes("This is me");
 		String expected = "[This is me]";
@@ -53,7 +53,7 @@ public class ContactImpTest {
 	 */
 	@Test
 	public void testAddNotes() {
-		Contact a = new ContactImp("Noam");
+		Contact a = new ContactImpl("Noam");
 		String expected = "";
 		assertEquals(expected, a.getNotes());
 		a.addNotes("The guy from MScCs");

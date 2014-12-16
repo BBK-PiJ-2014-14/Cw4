@@ -4,12 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class PastMeetingTest {
-
-	@Test
-	public void testGetNotes() {
-		fail("Not yet implemented");
-	}
+public class FutureMeetingImplTest {
 
 	@Test
 	public void testGetId() {
