@@ -16,7 +16,7 @@ public class MeetingImpl implements Meeting {
 	private int iD;
 	private Calendar date;
 	private Contact[] participants;
-	private String note;
+	
 	
 	
 	/** 

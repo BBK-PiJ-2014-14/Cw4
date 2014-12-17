@@ -13,9 +13,9 @@ public class PastMeetingImplTest {
 		Contact a = new ContactImpl("Noam");
 		Calendar c = Calendar.getInstance();
 		c.set(2015, 10, 15, 13, 30);
-		Meeting m = new PastMeetingImpl(c, a);
+		PastMeetingImpl m = new PastMeetingImpl(c, a);
+		String expected = "";
+		assertEquals(expected,m.getNotes());
 		
-		
-		fail("Not yet implemented");
 	}
 }

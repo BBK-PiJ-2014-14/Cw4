@@ -1,10 +1,25 @@
 package Cw4;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
 public class ContactManagerImpl implements ContactManager {
+	private List<FutureMeetingImpl> future;
+	private List<PastMeetingImpl> past;
+	private List<ContactImpl> contacts;
+	
+	
+	/**
+	 * Constructor
+	 */
+	public ContactManagerImpl() {
+		future = new ArrayList<FutureMeetingImpl>();
+		past = new ArrayList<PastMeetingImpl>();
+		contacts = new ArrayList<ContactImpl>();	
+	}
+	
 
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {

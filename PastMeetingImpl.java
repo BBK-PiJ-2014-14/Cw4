@@ -1,6 +1,8 @@
 package Cw4;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 
@@ -9,6 +11,7 @@ import java.util.Calendar;
  *
  */
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
+	private List<String> notes;
 	
    
 	/**
@@ -18,6 +21,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	 */
 	public PastMeetingImpl(Calendar date, Contact... participant) {
 		super(date, participant);
+		this.notes = new ArrayList<String>(); 
 	}
 
 	/**
