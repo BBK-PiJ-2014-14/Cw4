@@ -3,6 +3,8 @@ package Cw4;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -10,12 +12,12 @@ public class PastMeetingImplTest {
 
 	@Test
 	public void testGetNotes() {
-		Contact a = new ContactImpl("Noam");
-		Calendar c = Calendar.getInstance();
-		c.set(2015, 10, 15, 13, 30);
-		PastMeetingImpl m = new PastMeetingImpl(c, a);
-		String expected = "";
-		assertEquals(expected,m.getNotes());
-		
+	    Set<Contact> contacts = new TreeSet<Contact>();
+		ContactManager c = new ContactManagerImpl();
+		Calendar date = Calendar.getInstance();
+		c.addNewPastMeeting(contacts, date, "");
+		assertEquals(c.getPastMeeting(1).getNotes(), ""); //Check with an empty string.
+		c.addMeetingNotes(1, "This is the note");
+		assertEquals(c.getPastMeeting(1).getNotes(),"[This is the note]" );//Check after adding note.
 	}
 }
