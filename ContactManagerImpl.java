@@ -23,6 +23,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
+		Meeting newMeeting = new FutureMeetingImpl(date, contacts);
 		// TODO Auto-generated method stub
 		return 0;
 	}

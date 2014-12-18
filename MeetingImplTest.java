@@ -17,18 +17,27 @@ public class MeetingImplTest {
 	
 
 	/**
-	 *  This method create instances of objects to be use on the tests.
+	 *  This method create objects to be use on the tests.
 	 */
 	@Before
 	public void CreateForTest() {
 		a = new ContactImpl("Noam");
 		b = new ContactImpl("Daniel");
+		Set<Contact> contacts1 = new TreeSet<Contact>();
+		Set<Contact> contacts2 = new TreeSet<Contact>();
+		try {
+		contacts1.add(a);
+		contacts2.add(a);
+		contacts2.add(b);
+		} catch (ClassCastException e) {
+			e.getStackTrace();
+		}
 		Calendar c = Calendar.getInstance();
 		c.set(2015, 10, 1, 10, 50);
 		Calendar d = Calendar.getInstance();
 		d.set(2014, 12, 31, 23, 59);
-		first = new MeetingImpl(c, a);
-		second = new MeetingImpl(d, a, b);	
+		first = new MeetingImpl(c, contacts1);
+		second = new MeetingImpl(d, contacts2);	
 	}
 	
     /**
@@ -38,6 +47,8 @@ public class MeetingImplTest {
 	@Test
 	public void testGetId() {
 		assertNotEquals(first.getId(), second.getId());
+		assertEquals(first.getId(), 1);
+		assertEquals(second.getId(), 2);
 	}
 
 	/** 
@@ -55,15 +66,18 @@ public class MeetingImplTest {
 	 */
 	@Test
 	public void testGetContacts() {
-		Set<Contact> expected = new TreeSet<Contact>();
-		try {
-			expected.add(a);
-			expected.add(b);
-		} catch (ClassCastException e) {
-			e.getStackTrace();
-		}
-		assertEquals(expected, second.getContacts());
-		assertEquals(expected, first.getContacts());	
+		Set<Contact> expected1 = new TreeSet<Contact>();
+	    Set<Contact> expected2 = new TreeSet<Contact>();
+	    try {
+	    expected1.add(a);
+	    expected2.add(a);
+	    expected2.add(b);
+	    } catch (ClassCastException e) {
+	    	e.getStackTrace(); 	
+	    }
+	    assertEquals(expected1, first.getContacts());
+		assertEquals(expected2, second.getContacts());
+			
 	}
 
 }

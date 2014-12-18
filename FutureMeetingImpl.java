@@ -1,12 +1,12 @@
 package Cw4;
 
 import java.util.Calendar;
+import java.util.Set;
 
 public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting {
 
-	public FutureMeetingImpl(Calendar date, Contact... participant) {
+	public FutureMeetingImpl(Calendar date, Set<Contact> participant) {
 		super(date, participant);
-		// TODO Auto-generated constructor stub
 	}
 
 }

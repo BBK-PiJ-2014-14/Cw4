@@ -3,6 +3,7 @@ package Cw4;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -19,7 +20,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	 * @param date
 	 * @param participant
 	 */
-	public PastMeetingImpl(Calendar date, Contact... participant) {
+	public PastMeetingImpl(Calendar date, Set<Contact> participant) {
 		super(date, participant);
 		this.notes = new ArrayList<String>(); 
 	}

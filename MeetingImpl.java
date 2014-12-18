@@ -2,7 +2,6 @@ package Cw4;
 
 import java.util.Calendar;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Noam
@@ -15,7 +14,7 @@ public class MeetingImpl implements Meeting {
 	private static int meetingNum = 1;
 	private int iD;
 	private Calendar date;
-	private Contact[] participants;
+	private Set<Contact> participants;
 	
 	
 	
@@ -24,7 +23,7 @@ public class MeetingImpl implements Meeting {
 	 * @param date
 	 * @param participant
 	 */
-	public MeetingImpl(Calendar date, Contact... participant) {
+	public MeetingImpl(Calendar date, Set<Contact> participant) {
 		this.iD = meetingNum;
 		meetingNum++;
 		this.date = date;
@@ -55,15 +54,7 @@ public class MeetingImpl implements Meeting {
 	 */
 	@Override
 	public Set<Contact> getContacts() {
-		Set<Contact> result = new TreeSet<Contact>();
-		try {
-			for(int i = 0; i < participants.length; i++) {
-		    	result.add(participants[i]);
-	    	}
-		} catch(ClassCastException e) {
-			e.getStackTrace();
-		}
-		return result;
+		return participants;
 	}
 
 }
