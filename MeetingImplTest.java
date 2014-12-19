@@ -2,7 +2,10 @@ package Cw4;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,15 +26,11 @@ public class MeetingImplTest {
 	public void CreateForTest() {
 		a = new ContactImpl("Noam");
 		b = new ContactImpl("Daniel");
-		Set<Contact> contacts1 = new TreeSet<Contact>();
-		Set<Contact> contacts2 = new TreeSet<Contact>();
-		try {
+		List<Contact> contacts1 = new ArrayList<Contact>();
+		List<Contact> contacts2 = new ArrayList<Contact>();
 		contacts1.add(a);
 		contacts2.add(a);
 		contacts2.add(b);
-		} catch (ClassCastException e) {
-			e.getStackTrace();
-		}
 		Calendar c = Calendar.getInstance();
 		c.set(2015, 10, 1, 10, 50);
 		Calendar d = Calendar.getInstance();
@@ -66,15 +65,11 @@ public class MeetingImplTest {
 	 */
 	@Test
 	public void testGetContacts() {
-		Set<Contact> expected1 = new TreeSet<Contact>();
-	    Set<Contact> expected2 = new TreeSet<Contact>();
-	    try {
+		Set<Contact> expected1 = new HashSet<Contact>();
+	    Set<Contact> expected2 = new HashSet<Contact>();
 	    expected1.add(a);
 	    expected2.add(a);
 	    expected2.add(b);
-	    } catch (ClassCastException e) {
-	    	e.getStackTrace(); 	
-	    }
 	    assertEquals(expected1, first.getContacts());
 		assertEquals(expected2, second.getContacts());
 			

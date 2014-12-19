@@ -1,7 +1,10 @@
 package Cw4;
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Noam
@@ -14,7 +17,7 @@ public class MeetingImpl implements Meeting {
 	private static int meetingNum = 1;
 	private int iD;
 	private Calendar date;
-	private Set<Contact> participants;
+	private List<Contact> participants;
 	
 	
 	
@@ -23,7 +26,7 @@ public class MeetingImpl implements Meeting {
 	 * @param date
 	 * @param participant
 	 */
-	public MeetingImpl(Calendar date, Set<Contact> participant) {
+	public MeetingImpl(Calendar date, List<Contact> participant) {
 		this.iD = meetingNum;
 		meetingNum++;
 		this.date = date;
@@ -54,7 +57,11 @@ public class MeetingImpl implements Meeting {
 	 */
 	@Override
 	public Set<Contact> getContacts() {
-		return participants;
+		Set<Contact> result = new HashSet<Contact>();
+		for(int i=0; i<participants.size(); i++) {
+			result.add(participants.get(i));
+		}
+		return result;
 	}
 
 }
