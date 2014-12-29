@@ -22,7 +22,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	 */
 	public PastMeetingImpl(Calendar date, Set<Contact> participant) {
 		super(date, participant);
-		this.notes = new ArrayList<String>(); 
+		notes = new ArrayList<String>();
 	}
 
 	/**
@@ -31,8 +31,16 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	 */
 	@Override
 	public String getNotes() {
-		// TODO Auto-generated method stub
-		return null;
+		String result = "";
+		for(int i=0; i<notes.size(); i++) {
+			result = result + "[" + notes.get(i) + "]"; // Brackets were add to divide notes.
+		}
+		return result;
 	}
+	public void addNotes(String text) {
+		notes.add(text);
+		
+	}
+	
 
 }
