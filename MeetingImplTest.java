@@ -2,12 +2,11 @@ package Cw4;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
+
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,8 +25,8 @@ public class MeetingImplTest {
 	public void CreateForTest() {
 		a = new ContactImpl("Noam");
 		b = new ContactImpl("Daniel");
-		List<Contact> contacts1 = new ArrayList<Contact>();
-		List<Contact> contacts2 = new ArrayList<Contact>();
+		Set<Contact> contacts1 = new HashSet<Contact>();
+		Set<Contact> contacts2 = new HashSet<Contact>();
 		contacts1.add(a);
 		contacts2.add(a);
 		contacts2.add(b);

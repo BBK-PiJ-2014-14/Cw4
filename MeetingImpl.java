@@ -2,9 +2,7 @@ package Cw4;
 
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Noam
@@ -17,7 +15,7 @@ public class MeetingImpl implements Meeting {
 	private static int meetingNum = 1;
 	private int iD;
 	private Calendar date;
-	private List<Contact> participants;
+	private Set<Contact> participants;
 	
 	
 	
@@ -26,13 +24,13 @@ public class MeetingImpl implements Meeting {
 	 * @param date
 	 * @param participant
 	 */
-	public MeetingImpl(Calendar date, List<Contact> participant) {
+	public MeetingImpl(Calendar date, Set<Contact> participant) {
 		this.iD = meetingNum;
 		meetingNum++;
 		this.date = date;
-		this.participants = participant;		
+		this.participants = participant;
 	}
-	
+
 	/**
 	 * This method return the ID of the meeting.
 	 * @return the meeting's ID.
@@ -59,9 +57,9 @@ public class MeetingImpl implements Meeting {
 	public Set<Contact> getContacts() {
 		Set<Contact> result = new HashSet<Contact>();
 		for(int i=0; i<participants.size(); i++) {
-			result.add(participants.get(i));
+			result.addAll(participants);
 		}
-		return result;
+		return participants;
 	}
 
 }

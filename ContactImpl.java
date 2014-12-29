@@ -20,7 +20,7 @@ public class ContactImpl implements Contact {
 	public ContactImpl(String name) {
 		this.name = name;
 		this.iD = contactNum;
-		ContactImpl.contactNum++;
+		contactNum++;
 		this.notes = new ArrayList<String>();
 	}
 
