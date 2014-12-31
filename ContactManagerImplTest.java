@@ -82,13 +82,13 @@ public class ContactManagerImplTest {
 		assertNull(c.getMeeting(10));
 		c.addFutureMeeting(contacts, date); // Check if get future meeting
 		//System.out.println(c.future.get(0).getId());
-		assertEquals(c.getMeeting(11).getContacts(), contacts);
-		assertEquals(c.getMeeting(11).getDate(), date);
+		assertEquals(c.getMeeting(14).getContacts(), contacts);
+		assertEquals(c.getMeeting(14).getDate(), date);
 		date.set(2012, 10, 15, 10, 00);
 		c.addNewPastMeeting(contacts, date, "This is another meeting, id would be 2"); // Check with past meeting
 		//System.out.println(c.past.get(0).getId());
-		assertEquals(c.getMeeting(12).getContacts(), contacts);
-		assertEquals(c.getMeeting(12).getDate(), date);
+		assertEquals(c.getMeeting(15).getContacts(), contacts);
+		assertEquals(c.getMeeting(15).getDate(), date);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class ContactManagerImplTest {
 		assertEquals(c.getFutureMeetingList(date).get(0).getContacts(), contacts);
 		// index is 0 cause list should be returned in a chronological order.  
 		assertEquals(c.getFutureMeetingList(date).size(), 2); // Check that the list still contain both meetings.
-		date.set(2015,  10, 15, 14, 00);
+		date.set(2018, 10, 15, 15, 00);
 		assertTrue(c.getFutureMeetingList(date).isEmpty()); // check if other dates are still empty.
 	}
 
@@ -134,9 +134,11 @@ public class ContactManagerImplTest {
 	 */
 	@Test
 	public void testGetPastMeetingList() {
-		assertTrue(c.getPastMeetingList(a).isEmpty());
-		contacts.add(a);
+		c.addNewContact("Jay", "new contact");
+		
 		date.set(2012,10, 15, 14, 00);
+	
+		//contacts.add();
 		c.addNewPastMeeting(contacts, date, "This is the first meeting");
 		assertTrue(c.getPastMeetingList(a).get(0).getContacts().contains(a));
 		assertEquals(c.getPastMeetingList(a).get(0).getDate(), date);
@@ -184,6 +186,7 @@ public class ContactManagerImplTest {
 		assertEquals(c.getPastMeeting(8).getContacts(), contacts);
 		c.addMeetingNotes(8, "Adding notes for an exsisting past meeting");
 		assertEquals(c.getPastMeeting(8).getNotes(), "[First meeting][Adding notes for an exsisting past meeting]");
+		
 	}
 
 	/**

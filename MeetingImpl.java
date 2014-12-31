@@ -11,7 +11,7 @@ import java.util.Set;
  *It has a String field note to keep notes about the meeting.
  *It has also other fields as required by the interface. 
  */
-public class MeetingImpl implements Meeting {
+public class MeetingImpl implements Meeting, Comparable<Meeting> {
 	private static int meetingNum = 1;
 	private int iD;
 	private Calendar date;
@@ -60,6 +60,19 @@ public class MeetingImpl implements Meeting {
 			result.addAll(participants);
 		}
 		return participants;
+	}
+
+
+	@Override
+	public int compareTo(Meeting o) {
+		if (this.getId() == o.getId()) {
+			return 0;
+		}
+		int result = this.getDate().compareTo(o.getDate());
+		if (result != 0 ) {
+			return result;
+		}
+		return this.getId() > o.getId() ? 1 : -1;
 	}
 
 }
