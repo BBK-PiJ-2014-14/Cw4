@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MeetingImplTest {
-	MeetingImpl first;
-	MeetingImpl second;
+	Meeting first;
+	Meeting second;
 	Contact a;
 	Contact b;
 	
@@ -72,14 +72,6 @@ public class MeetingImplTest {
 	    assertEquals(expected1, first.getContacts());
 		assertEquals(expected2, second.getContacts());
 			
-	}
-	
-	@Test
-	public void testCompareTo() {
-		assertEquals(first.compareTo(second), 1);
-		MeetingImpl therd = first;
-		assertEquals(therd.compareTo(first), 0);
-		assertEquals(second.compareTo(therd), -1);
 	}
 
 }
