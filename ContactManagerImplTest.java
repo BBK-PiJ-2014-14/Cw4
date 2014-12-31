@@ -194,10 +194,14 @@ public class ContactManagerImplTest {
 	 */
 	@Test
 	public void testAddNewContact() {
-		c.addNewContact("John", "First contact");
-		assertEquals(c.getContacts("John").size(), 1);
-		c.addNewContact("Bob", "Second contact");
-		assertEquals(c.getContacts("Bob").size(), 1);
+		assertTrue(c.getContacts("Bob").isEmpty());
+		c.addNewContact("Bob", "First contact");
+		assertFalse(c.getContacts("Bob").isEmpty());
+		c.addNewContact("Bob", "Another Meeting");
+		assertEquals(c.getContacts("Bob").size(), 2);
+		c.addNewContact("John", "Meeting with someone else");
+		assertEquals(c.getContacts("Bob").size(), 2);
+		assertFalse(c.getContacts("John").isEmpty());
 	}
 
 	/**
@@ -206,9 +210,9 @@ public class ContactManagerImplTest {
 	@Test
 	public void testGetContactsIntArray() {
 		c.addNewContact("John", "This is John and he is the first contact");
-		assertEquals(c.getContacts("John"), c.getContacts(3));
+		assertEquals(c.getContacts(1), 1);
 		c.addNewContact("Bob", "This is Bob and he is the second");
-		assertEquals(c.getContacts("Bob"), c.getContacts(4));
+		assertEquals(c.getContacts(1, 2).size(), 2);
 		assertEquals(c.getContacts(3, 4).size(), 2); // Check with more then one ID.
 	}
 
@@ -217,13 +221,14 @@ public class ContactManagerImplTest {
 	 */
 	@Test
 	public void testGetContactsString() {
+		assertTrue(c.getContacts("John").isEmpty());
 		c.addNewContact("John", "this is John");
-		//System.out.println(c.contacts.get(0).getId());
-		assertEquals(c.getContacts("John"), c.getContacts(27));
-		c.addNewContact("Bob", "and this is another John");
-		assertEquals(c.getContacts("Bob"), c.getContacts(28));
-		c.addNewContact("John", "this is Another John");
-		assertEquals(c.getContacts("John").size(), 2); //Check if return to different contacts if the name is the same.
+		assertEquals(c.getContacts("John").size(), 1);
+		c.addNewContact("John", "This is another John");
+		assertEquals(c.getContacts("John").size(), 2);
+		assertTrue(c.getContacts("Bob").isEmpty());
+		c.addNewContact("Bob", "this is Bob");
+		assertEquals(c.getContacts("Bob").size(), 1); //Check if return to different contacts if the name is the same.
 	}
 
 
