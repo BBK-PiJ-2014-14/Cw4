@@ -3,17 +3,12 @@ package Cw4;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Set;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ContactManagerImplTest {
 	ContactManagerImpl c =new ContactManagerImpl();
-	Contact a;
-	Contact b;
 	Calendar date;
 	Set<Contact> contacts;
 	
@@ -21,95 +16,100 @@ public class ContactManagerImplTest {
 	@Before
 	public void createContactMagager() {
 		c = new ContactManagerImpl();
-		a = new ContactImpl("Noam");
-		b = new ContactImpl("Daniel");
-		contacts = new HashSet<Contact>();
-		contacts.add(a);
+		c.addNewContact("John", "First contact");
+		c.addNewContact("Bob", "Second contact");
+		contacts = c.getContacts("John");
 		date = Calendar.getInstance();			
 	}
 
 	
 
 	/**
-	 * Test for method addFutureMeeting(Set<Contact> contacts, Calendar date).
+	 * Test for method addFutureMeeting(Set<Contact> contacts, Calendar date).+
 	 */
 	@Test
 	public void testAddFutureMeeting() {
-		c.addFutureMeeting(contacts, date);
-		assertFalse(c.getFutureMeetingList(a).isEmpty()); //Check that the meeting was added
+		date.set(2015, 8, 8, 8, 00);
+		int a = c.addFutureMeeting(contacts, date);
+		assertEquals(c.getFutureMeeting(a).getContacts(), contacts); //Check that the meeting was added
+		assertEquals(c.getFutureMeeting(a).getDate(), date);
 		date.set(2015, 10, 15, 14, 00);
-		c.addFutureMeeting(contacts, date ); // Another meeting on a different date.
-		assertEquals(2, c.getFutureMeetingList(a).size()); // the 2 meeting are with a so should be 2.
+		int b = c.addFutureMeeting(contacts, date ); // Another meeting on a different date.
+		assertEquals(c.getFutureMeeting(b).getContacts(), contacts); // the 2 meeting are with a so should be 2.
+		assertEquals(c.getFutureMeeting(a).getDate(), date);
 	}
 
 	/**
-	 * Test for method getPastMeeting(int iD).
+	 * Test for method getPastMeeting(int iD).+
 	 */
 	@Test 
 	public void testGetPastMeeting() {
-		assertNull(c.getPastMeeting(5)); // check if return null for a non existing meeting.
-		c.addNewPastMeeting(contacts, date, "this is the first meeting"); // iD is 1.
-		assertEquals(c.getPastMeeting(1).getContacts(), contacts);
-		assertEquals(c.getPastMeeting(1).getDate(), date);
-		assertEquals(c.getPastMeeting(1).getNotes(),"[this is the first meeting]");
-		date.set(2015, 15, 10, 4, 00);
-		c.addNewPastMeeting(contacts, date, "this is another meeting"); // Another meeting, parameters changed.
-		assertEquals(c.getPastMeeting(2).getContacts(), contacts); // Second so ID is 2.
-		assertEquals(c.getPastMeeting(2).getDate(), date);
-		assertEquals(c.getPastMeeting(2).getNotes(),"[this is another meeting]");
+		Object[] con = contacts.toArray();
+		Contact john = (Contact)con[0];
+		date.set(2012, 10, 15, 10, 00);
+		c.addNewPastMeeting(contacts, date, "A new past meeting");
+		int id = c.getPastMeetingList(john).get(0).getId();
+		assertEquals(c.getPastMeeting(id).getDate(), date);
+		assertEquals(c.getPastMeeting(id).getContacts(), contacts);
+		assertEquals(c.getPastMeeting(id).getNotes(),"[A new past meeting]");
 	}
 
 	/**
-	 * Test for method getFutureMeeting(int iD).
+	 * Test for method getFutureMeeting(int iD).+
 	 */
 	@Test
 	public void testGetFutureMeeting() {
-		assertNull(c.getFutureMeeting(10)); // check if return null for a non existing meeting.
-		c.addFutureMeeting(contacts, date);
-		assertEquals(c.getFutureMeeting(3).getContacts(), contacts);
-		assertEquals(c.getFutureMeeting(3).getDate(), date);
-		date.set(2015, 15, 10, 14, 00);
-		c.addFutureMeeting(contacts, date);
-		assertEquals(c.getFutureMeeting(4).getContacts(), contacts);
-		assertEquals(c.getFutureMeeting(4).getDate(), date);
+		assertNull(c.getFutureMeeting(50)); // check if return null for a non existing meeting.
+		date.set(2015, 10, 15, 10, 00);
+		int a = c.addFutureMeeting(contacts, date);
+		assertEquals(c.getFutureMeeting(a).getContacts(), contacts);
+		assertEquals(c.getFutureMeeting(a).getDate(), date);
+		date.set(2016, 15, 10, 14, 00);
+		int b = c.addFutureMeeting(contacts, date);
+		assertEquals(c.getFutureMeeting(b).getContacts(), contacts);
+		assertEquals(c.getFutureMeeting(b).getDate(), date);
 	}
 
 	/**
-	 * Test for method getMeeting(int iD).
+	 * Test for method getMeeting(int iD).+
 	 */
 	@Test
 	public void testGetMeeting() {
 		assertNull(c.getMeeting(10));
-		c.addFutureMeeting(contacts, date); // Check if get future meeting
-		//System.out.println(c.future.get(0).getId());
-		assertEquals(c.getMeeting(14).getContacts(), contacts);
-		assertEquals(c.getMeeting(14).getDate(), date);
+		date.set(2015, 10, 15, 10, 00);
+		int futureId = c.addFutureMeeting(contacts, date); // Check if get future meeting
+		assertEquals(c.getMeeting(futureId).getContacts(), contacts);
+		assertEquals(c.getMeeting(futureId).getDate(), date);
 		date.set(2012, 10, 15, 10, 00);
-		c.addNewPastMeeting(contacts, date, "This is another meeting, id would be 2"); // Check with past meeting
-		//System.out.println(c.past.get(0).getId());
-		assertEquals(c.getMeeting(15).getContacts(), contacts);
-		assertEquals(c.getMeeting(15).getDate(), date);
+		c.addNewPastMeeting(contacts, date, "This is a past meeting"); // Check with past meeting
+		Object[] con = contacts.toArray();
+		Contact john = (Contact)con[0];
+		int pastId = c.getPastMeetingList(john).get(0).getId();
+		assertEquals(c.getMeeting(pastId).getContacts(), contacts);
+		assertEquals(c.getMeeting(pastId).getDate(), date);
 	}
 
 	/**
-	 * Test for method getFutureMeetingList(Contact contact).
+	 * Test for method getFutureMeetingList(Contact contact).+
 	 */
 	@Test
 	public void testGetFutureMeetingListContact() {
-		assertTrue(c.getFutureMeetingList(b).isEmpty()); // check if return empty list if there are no meeting
+		Object[] con = contacts.toArray();
+		Contact john = (Contact)con[0];
+		assertTrue(c.getFutureMeetingList(john).isEmpty()); // check if return empty list if there are no meeting
+		date.set(2015, 10, 15, 10, 00);
 		c.addFutureMeeting(contacts, date);
-		assertEquals(c.getFutureMeetingList(a).get(0).getContacts(), contacts); // check if return the meeting that added.
-		assertEquals(c.getFutureMeetingList(a).get(0).getDate(), date);
-		date.set(2015, 10, 15, 14, 00);
+		assertEquals(c.getFutureMeetingList(john).get(0).getContacts(), contacts); // check if return the meeting that added.
+		assertEquals(c.getFutureMeetingList(john).get(0).getDate(), date);
+		date.set(2016, 10, 15, 14, 00);
 		c.addFutureMeeting(contacts, date);
-		assertEquals(c.getFutureMeetingList(a).get(1).getContacts(), contacts);
-		assertEquals(c.getFutureMeetingList(a).get(1).getDate(), date);
-		assertEquals(c.getFutureMeetingList(a).size(), 2); // Check if the list contain both of the meetings.
-		assertTrue(c.getFutureMeetingList(b).isEmpty()); // Check that not return same for every contact.
+		assertEquals(c.getFutureMeetingList(john).get(1).getContacts(), contacts);
+		assertEquals(c.getFutureMeetingList(john).get(1).getDate(), date);
+		assertEquals(c.getFutureMeetingList(john).size(), 2); // Check if the list contain both of the meetings.
 	}
 
 	/**
-	 * Test for method getFutureMeetingList(Calendar date).
+	 * Test for method getFutureMeetingList(Calendar date).+
 	 */
 	@Test
 	public void testGetFutureMeetingListCalendar() {
@@ -118,117 +118,120 @@ public class ContactManagerImplTest {
 		c.addFutureMeeting(contacts, date);
 		assertEquals(c.getFutureMeetingList(date).get(0).getDate(), date); // Check if return the meeting that added.
 		assertEquals(c.getFutureMeetingList(date).get(0).getContacts(), contacts);
-		contacts.add(a);
 		date.set(2015,  10, 15, 13, 00);
 		c.addFutureMeeting(contacts, date); // Another meeting, same date but different contacts and different hour.
 		assertEquals(c.getFutureMeetingList(date).get(0).getDate(), date);
 		assertEquals(c.getFutureMeetingList(date).get(0).getContacts(), contacts);
 		// index is 0 cause list should be returned in a chronological order.  
 		assertEquals(c.getFutureMeetingList(date).size(), 2); // Check that the list still contain both meetings.
-		date.set(2018, 10, 15, 15, 00);
-		assertTrue(c.getFutureMeetingList(date).isEmpty()); // check if other dates are still empty.
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2020, 10, 15, 15, 00);
+		assertTrue(c.getFutureMeetingList(newDate).isEmpty()); // check if other dates are still empty.
 	}
 
 	/**
-	 * Test for method getPastMeetingList().
+	 * Test for method getPastMeetingList(Contact contact).+
 	 */
 	@Test
 	public void testGetPastMeetingList() {
-		c.addNewContact("Jay", "new contact");
-		
-		date.set(2012,10, 15, 14, 00);
-	
-		//contacts.add();
-		c.addNewPastMeeting(contacts, date, "This is the first meeting");
-		assertTrue(c.getPastMeetingList(a).get(0).getContacts().contains(a));
-		assertEquals(c.getPastMeetingList(a).get(0).getDate(), date);
-		assertEquals(c.getPastMeetingList(a).get(0).getNotes(),"[This is the first meeting]");
-		date.set(2010, 10, 15, 14, 00);
-		c.addNewPastMeeting(contacts, date, "Another meeting with a"); // On a different date.
-		assertTrue(c.getPastMeetingList(a).get(0).getContacts().contains(a));
-		assertEquals(c.getPastMeetingList(a).get(0).getDate(), date);
-		assertEquals(c.getPastMeetingList(a).get(0).getNotes(),"[Another meeting with a]");
-		//index is again 0 cause list should be in a chronological order.
-		assertEquals(c.getPastMeetingList(a).size(), 2); // Check if both meetings are there.
-		assertTrue(c.getPastMeetingList(b).isEmpty()); // Check if still return empty for a contact with no meetings.
-	}
+		Object[] con = c.getContacts("John").toArray();
+		Contact john = (Contact)con[0];
+		date.set(2012, 10, 15, 10, 00);
+		c.addNewPastMeeting(contacts, date, "This is the first past meeting");
+		assertFalse(c.getPastMeetingList(john).isEmpty());
+		assertEquals(c.getPastMeetingList(john).size(), 1);
+		date.set(2013, 10, 15, 10, 00);
+		c.addNewPastMeeting(contacts, date, "This is a nother meeting");
+		assertEquals(c.getPastMeetingList(john).size(), 2);	
+	}		
+
 
 	/**
-	 * Test for method addNewPastMeeting().
+	 * Test for method addNewPastMeeting().+
 	 */
 	@Test
 	public void testAddNewPastMeeting() {
+		Object[] con = c.getContacts("John").toArray();
+		Contact john = (Contact)con[0];
+		date.set(2012, 10, 15, 10, 00);
 		c.addNewPastMeeting(contacts, date, "This is the first past meeting");
-		//System.out.println(c.past.get(0).getId());
-		assertEquals(c.getPastMeeting(9).getDate(), date); // Check if the right date was added.
-		assertEquals(c.getPastMeeting(9).getContacts(), contacts);	//Check if the right contacts were added.
-		assertEquals(c.getPastMeeting(9).getNotes(), "[This is the first past meeting]");// Check if the notes were added.
-		date.set(2012, 10, 15, 14, 00);
-		contacts.add(a);
-		c.addNewPastMeeting(contacts, date, "This is another past meeting");//Another meeting, different parameters
-		//System.out.println(c.past.get(1).getId());
-		assertEquals(c.getPastMeeting(10).getDate(), date); 
-		assertEquals(c.getPastMeeting(10).getContacts(), contacts);	
-		assertEquals(c.getPastMeeting(10).getNotes(), "[This is another past meeting]");
+		assertFalse(c.getPastMeetingList(john).isEmpty());
+		assertEquals(c.getPastMeetingList(john).size(), 1);
+		date.set(2013, 10, 15, 10, 00);
+		c.addNewPastMeeting(contacts, date, "This is a nother meeting");
+		assertEquals(c.getPastMeetingList(john).size(), 2);		
 	}
 
 	/**
-	 * Test for method addMeetingNotes().
+	 * Test for method addMeetingNotes().+
 	 */
 	@Test
 	public void testAddMeetingNotes() {
-		c.addFutureMeeting(contacts, date);
-		//System.out.println(c.future.size());
-		c.addMeetingNotes(7, "First meeting"); //now it should become a pastMeeting.
-		//System.out.println(c.past.get(0).getId());
-		assertEquals(c.getPastMeeting(8).getNotes(),"[First meeting]");//check if the meeting is a pastMeeting.
-		assertEquals(c.getPastMeeting(8).getDate(), date);
-		assertEquals(c.getPastMeeting(8).getContacts(), contacts);
-		c.addMeetingNotes(8, "Adding notes for an exsisting past meeting");
-		assertEquals(c.getPastMeeting(8).getNotes(), "[First meeting][Adding notes for an exsisting past meeting]");
-		
+		int futureId = c.addFutureMeeting(contacts, date);
+		date.set(2014, 10, 15, 15, 00);
+		c.addMeetingNotes(futureId, "First meeting"); //now it should become a pastMeeting.
+		Object [] con = contacts.toArray();
+		Contact john = (Contact)con[0];
+		int pastId = c.getPastMeetingList(john).get(0).getId();
+		assertEquals(c.getPastMeeting(pastId).getNotes(),"[First meeting]");//check if the meeting is a pastMeeting.
+		assertEquals(c.getPastMeeting(pastId).getDate(), date);
+		assertEquals(c.getPastMeeting(pastId).getContacts(), contacts);
+		c.addMeetingNotes(pastId, "Adding notes for an exsisting past meeting");
+		assertEquals(c.getPastMeeting(pastId).getNotes(), "[First meeting][Adding notes for an exsisting past meeting]");	
 	}
 
 	/**
-	 * Test for method addNewContact().
+	 * Test for method addNewContact().+
 	 */
 	@Test
 	public void testAddNewContact() {
-		assertTrue(c.getContacts("Bob").isEmpty());
-		c.addNewContact("Bob", "First contact");
-		assertFalse(c.getContacts("Bob").isEmpty());
-		c.addNewContact("Bob", "Another Meeting");
-		assertEquals(c.getContacts("Bob").size(), 2);
-		c.addNewContact("John", "Meeting with someone else");
-		assertEquals(c.getContacts("Bob").size(), 2);
-		assertFalse(c.getContacts("John").isEmpty());
+		assertTrue(c.getContacts("Noam").isEmpty());
+		c.addNewContact("Noam", " Noam is added");
+		assertFalse(c.getContacts("Noam").isEmpty());
+		c.addNewContact("Noam", "Another Noam");
+		assertEquals(c.getContacts("Noam").size(), 2);
+		c.addNewContact("Guy", "Someone else");
+		assertEquals(c.getContacts("Noam").size(), 2);
+		assertFalse(c.getContacts("Guy").isEmpty());
+		assertTrue(c.getContacts("Don").isEmpty());
 	}
 
 	/**
-	 * Test for method getContacts(int... iD).
+	 * Test for method getContacts(int... iD).+
 	 */
 	@Test
 	public void testGetContactsIntArray() {
-		c.addNewContact("John", "This is John and he is the first contact");
-		assertEquals(c.getContacts(1), 1);
-		c.addNewContact("Bob", "This is Bob and he is the second");
-		assertEquals(c.getContacts(1, 2).size(), 2);
-		assertEquals(c.getContacts(3, 4).size(), 2); // Check with more then one ID.
+		c.addNewContact("Noam", "This is Noam");
+		Object[] con = c.getContacts("Noam").toArray();
+		Contact n = (Contact)con[0];
+		int noamId = n.getId();
+		assertEquals(c.getContacts(noamId), c.getContacts("Noam"));
+		c.addNewContact("Bob", "This is Bob");
+		con = c.getContacts("Bob").toArray();
+		n = (Contact)con[0];
+		int bobId = n.getId();
+		assertEquals(c.getContacts(noamId, bobId).size(), 2);
+		c.getContacts(noamId, bobId).containsAll(c.getContacts("Noam"));
+		c.getContacts(noamId, bobId).containsAll(c.getContacts("Bob"));
+		
+		
+		//assertEquals(c.getContacts(1, 2).size(), 2);
+		//assertEquals(c.getContacts(3, 4).size(), 2); // Check with more then one ID.
 	}
 
 	/**
-	 * Test for method getContacts(String name).
+	 * Test for method getContacts(String name).+
 	 */
 	@Test
 	public void testGetContactsString() {
-		assertTrue(c.getContacts("John").isEmpty());
-		c.addNewContact("John", "this is John");
-		assertEquals(c.getContacts("John").size(), 1);
-		c.addNewContact("John", "This is another John");
-		assertEquals(c.getContacts("John").size(), 2);
-		assertTrue(c.getContacts("Bob").isEmpty());
-		c.addNewContact("Bob", "this is Bob");
-		assertEquals(c.getContacts("Bob").size(), 1); //Check if return to different contacts if the name is the same.
+		assertTrue(c.getContacts("Don").isEmpty());
+		c.addNewContact("Don", "this is Don");
+		assertEquals(c.getContacts("Don").size(), 1);
+		c.addNewContact("Don", "This is another Don");
+		assertEquals(c.getContacts("Don").size(), 2);
+		assertTrue(c.getContacts("Noam").isEmpty());
+		c.addNewContact("Noam", "this is Noam");
+		assertEquals(c.getContacts("Noam").size(), 1); //Check if return to different contacts if the name is the same.
 	}
 
 
