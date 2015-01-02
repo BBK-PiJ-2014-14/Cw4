@@ -88,7 +88,7 @@ public class ContactManagerImplTest {
 	 */
 	@Test
 	public void testGetMeeting() {
-		assertNull(c.getMeeting(10));
+		assertNull(c.getMeeting(50));
 		date.set(2015, 10, 15, 10, 00);
 		int futureId = c.addFutureMeeting(contacts1, date); // Check if get future meeting
 		assertEquals(c.getMeeting(futureId).getContacts(), contacts1);
