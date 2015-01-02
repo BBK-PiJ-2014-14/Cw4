@@ -3,6 +3,7 @@ package Cw4;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -137,24 +138,31 @@ public class ContactManagerImpl implements ContactManager {
 				result.add(future.get(i));
 			}
 		}
-		
-		Collections.sort();
+		Collections.sort(result, dateComp);
 		return result;
 	}
 
+	/**
+	* Returns the list of meetings that are scheduled for, or that took
+	* place on, the specified date
+	*
+	* If there are none, the returned list will be empty. Otherwise,
+	* the list will be chronologically sorted and will not contain any
+	* duplicates.
+	*
+	* @param date the date
+	* @return the list of meetings
+	*/
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
-		List<MeetingImpl> result = new ArrayList<MeetingImpl>();
+		List<Meeting> result = new ArrayList<Meeting>();
 		for(int i=0; i<future.size(); i++) {
 			if (future.get(i).getDate() == date) {
-				result.add((MeetingImpl)future.get(i));
+				result.add(future.get(i));
 			}
 		}
-		Collections.sort(result);
-		
-		return result;
-		
-	
+		Collections.sort(result, dateComp);
+		return result;	
 	}
 
 	@Override
@@ -168,7 +176,6 @@ public class ContactManagerImpl implements ContactManager {
 				result.add(past.get(i));
 			}
 		}
-		
 		return result;
 	}
 
@@ -270,6 +277,26 @@ public class ContactManagerImpl implements ContactManager {
 	public void flush() {
 		// TODO Auto-generated method stub
 
+
+		
+	/**
+	 * A comparator to compare meeting by their date.
+	 */
 	}
+	public Comparator<Meeting> dateComp = new Comparator<Meeting>() {
+
+		@Override
+		public int compare(Meeting o1, Meeting o2) {
+			if (o1.getId() == o2.getId()) {
+				return 0;
+			}
+			int result = o1.getDate().compareTo(o2.getDate());
+			if (result != 0 ) {
+				return result;
+			}
+			return o1.getId() > o2.getId() ? 1 : -1;
+		}
+		
+	};
 
 }

@@ -73,13 +73,4 @@ public class MeetingImplTest {
 		assertEquals(expected2, second.getContacts());
 			
 	}
-	
-	@Test
-	public void testCompareTo() {
-		assertEquals(first.compareTo(second), 1);
-		MeetingImpl therd = first;
-		assertEquals(therd.compareTo(first), 0);
-		assertEquals(second.compareTo(therd), -1);
-	}
-
 }

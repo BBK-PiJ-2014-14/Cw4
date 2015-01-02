@@ -106,14 +106,14 @@ public class ContactManagerImplTest {
 	@Test
 	public void testGetFutureMeetingListContact() {
 		assertTrue(c.getFutureMeetingList(john).isEmpty()); // check if return empty list if there are no meeting
-		date.set(2015, 10, 15, 10, 00);
+		date.set(2016, 10, 15, 10, 00);
 		c.addFutureMeeting(contacts1, date);
 		assertEquals(c.getFutureMeetingList(john).get(0).getContacts(), contacts1); // check if return the meeting that added.
 		assertEquals(c.getFutureMeetingList(john).get(0).getDate(), date);
-		newDate.set(2016, 10, 15, 14, 00);
+		newDate.set(2015, 10, 15, 14, 00);
 		c.addFutureMeeting(contacts1, newDate);
-		assertEquals(c.getFutureMeetingList(john).get(1).getContacts(), contacts1);
-		assertEquals(c.getFutureMeetingList(john).get(1).getDate(), newDate);
+		assertEquals(c.getFutureMeetingList(john).get(0).getContacts(), contacts1);// index is 0 to check if the contacts are sorted.
+		assertEquals(c.getFutureMeetingList(john).get(0).getDate(), newDate);
 		assertEquals(c.getFutureMeetingList(john).size(), 2); // Check if the list contain both of the meetings.
 	}
 
@@ -234,6 +234,24 @@ public class ContactManagerImplTest {
 	@Test
 	public void testFlush() {
 		fail("Not yet implemented");
+	}
+	
+	/**
+	 * Test for comparator dateComp.
+	 */
+	@Test
+	public void testDateComp() {
+		date.set(2015, 10, 15, 10, 00);
+		newDate.set(2016, 10, 15, 10, 00);
+		int id = c.addFutureMeeting(contacts1, date);
+		Meeting first = c.getMeeting(id);
+		id = c.addFutureMeeting(contacts2, newDate);
+		Meeting second = c.getMeeting(id);
+		Meeting sameAsSecond = c.getMeeting(id);
+		assertEquals(c.dateComp.compare(first, second),-1);
+		assertEquals(c.dateComp.compare(second, sameAsSecond), 0);
+		assertEquals(c.dateComp.compare(sameAsSecond, first), 1);
+		
 	}
 
 }
