@@ -3,7 +3,6 @@ package Cw4;
 import static org.junit.Assert.*;
 
 import java.io.BufferedInputStream;
-import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,7 +13,11 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * This class test the class ContactManagerImpl.
+ * @author Noam
+ *
+ */
 public class ContactManagerImplTest {
 	ContactManagerImpl c =new ContactManagerImpl();
 	Calendar date;

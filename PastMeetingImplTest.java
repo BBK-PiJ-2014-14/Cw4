@@ -1,12 +1,16 @@
 package Cw4;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
 
+/**
+ * This is a test class for class PastMeetingImpl.
+ * @author Noam
+ *
+ */
 public class PastMeetingImplTest {
 	
 	/**

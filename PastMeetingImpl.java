@@ -12,6 +12,7 @@ import java.util.Set;
  *
  */
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
+	private static final long serialVersionUID = 987813508180475605L;
 	private List<String> notes;
 	
    

@@ -13,9 +13,6 @@ import java.util.Set;
  *It has also other fields as required by the interface. 
  */
 public class MeetingImpl implements Meeting, Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static int meetingNum = 1;
 	private int iD;

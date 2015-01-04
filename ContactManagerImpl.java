@@ -1,5 +1,9 @@
 package Cw4;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -8,9 +12,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class implements the method ContactManager.
+ * It contain three lists, for past meetings, future meetings and contacts. 
+ * @author Noam
+ *
+ */
 public class ContactManagerImpl implements ContactManager {
-	private List<FutureMeeting> future;
-	private List<PastMeeting> past;
+	private List<Meeting> future;
+	private List<Meeting> past;
 	private List<Contact> contacts;
 	
 	
@@ -18,12 +28,17 @@ public class ContactManagerImpl implements ContactManager {
 	 * Constructor
 	 */
 	public ContactManagerImpl() {
-		future = new ArrayList<FutureMeeting>();
-		past = new ArrayList<PastMeeting>();
+		future = new ArrayList<Meeting>();
+		past = new ArrayList<Meeting>();
 		contacts = new ArrayList<Contact>();	
 	}
-	
 
+	public ContactManagerImpl(List<Meeting> future, List<Meeting> past,
+			List<Contact> contacts) {
+		this.future = future;
+		this.past = past;
+		this.contacts = contacts;
+	}
 	/**
 	 * Add a new meeting to be held in the future.
      *
@@ -62,7 +77,7 @@ public class ContactManagerImpl implements ContactManager {
 		PastMeeting result = null;
 		for(int i=0; i<past.size(); i++) {
 			if(past.get(i).getId()==id){
-				result = past.get(i);
+				result = (PastMeeting)past.get(i);
 				break;
 			}	
 		}
@@ -81,7 +96,7 @@ public class ContactManagerImpl implements ContactManager {
 		FutureMeeting result = null;
 		for(int i=0; i<future.size(); i++) {
 			if(future.get(i).getId()==id) {
-				result = future.get(i);
+				result = (FutureMeeting)future.get(i);
 				break;
 			}
 		}
@@ -184,7 +199,7 @@ public class ContactManagerImpl implements ContactManager {
 		List<PastMeeting> result = new ArrayList<PastMeeting>();
 		for (int i=0; i<past.size(); i++) {
 			if (past.get(i).getContacts().contains(contact)) {
-				result.add(past.get(i));
+				result.add((PastMeeting)past.get(i));
 			}
 		}
 		Collections.sort(result, dateComp);
@@ -330,16 +345,34 @@ public class ContactManagerImpl implements ContactManager {
 		return result;
 	}
 
+	/**
+	* Save all data to disk.
+	*
+	* This method must be executed when the program is
+	* closed and when/if the user requests it.
+	*/
 	@Override
 	public void flush() {
-		// TODO Auto-generated method stub
-
-
-		
+		ObjectOutputStream out = null;
+		try {
+			out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("cmInfo.txt")));
+			out.writeObject(contacts);
+			out.writeObject(past);
+			out.writeObject(future);
+		} catch (IOException d) {
+			d.getStackTrace();
+		} finally {
+			try {
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+		}
+	}	
+	
 	/**
 	 * A comparator to compare meeting by their date.
 	 */
-	}
 	public Comparator<Meeting> dateComp = new Comparator<Meeting>() {
 
 		@Override

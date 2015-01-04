@@ -11,6 +11,11 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * This class test's class MeetingImpl.
+ * @author Noam
+ *
+ */
 public class MeetingImplTest {
 	MeetingImpl first;
 	MeetingImpl second;
