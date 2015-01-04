@@ -2,8 +2,16 @@ package Cw4;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedInputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -231,9 +239,49 @@ public class ContactManagerImplTest {
 	}
 
 
+	/**
+	 * Test for method flush().
+	 */
 	@Test
 	public void testFlush() {
-		fail("Not yet implemented");
+		date.set(2015, 10, 15, 10, 00);
+		int id = c.addFutureMeeting(contacts1, date);
+		c.flush();
+		 ObjectInputStream in = null;
+	        try {
+	            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("cmInfo.txt")));
+				@SuppressWarnings("unchecked")
+				List<Contact> con = (List<Contact>) in.readObject();
+	            @SuppressWarnings("unchecked")
+				List<Meeting> past = (List<Meeting>) in.readObject();
+	            @SuppressWarnings("unchecked")
+				List<Meeting> future = (List<Meeting>) in.readObject();
+	            ContactManagerImpl d = new ContactManagerImpl(future, past, con);
+	            Object[] co = d.getFutureMeeting(id).getContacts().toArray();
+	            Contact conD = (Contact)co[0]; // this should be the contact that participate in the meeting.
+	            int jd =john.getId(); // contact id.
+	            Object[] o = d.getContacts(jd).toArray();
+	            Contact johnD = (Contact)o[0]; // This is the contact from the contact manager list of of contact.
+	            assertEquals(c.getFutureMeeting(id).getDate(), d.getFutureMeeting(id).getDate()); // checks if the same meeting was saved.
+	            assertEquals(john.getId(), conD.getId());
+	            assertEquals(john.getName(), conD.getName());
+	            assertEquals(c.getFutureMeeting(id).getContacts().size(), d.getFutureMeeting(id).getContacts().size()); //checks if the contacts are the same.
+	            assertEquals(john.getName(), johnD.getName()); 
+	            assertEquals(john.getNotes(), johnD.getNotes());
+	        } catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} 
+	        finally {	
+	        	try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	        }
 	}
 	
 	/**

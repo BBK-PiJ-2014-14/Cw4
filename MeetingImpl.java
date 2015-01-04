@@ -1,5 +1,6 @@
 package Cw4;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +12,11 @@ import java.util.Set;
  *It has a String field note to keep notes about the meeting.
  *It has also other fields as required by the interface. 
  */
-public class MeetingImpl implements Meeting {
+public class MeetingImpl implements Meeting, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static int meetingNum = 1;
 	private int iD;
 	private Calendar date;

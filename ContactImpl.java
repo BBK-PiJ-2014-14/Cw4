@@ -1,5 +1,6 @@
 package Cw4;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,11 @@ import java.util.List;
  * This class implements the interface Contact.
  * @author Noam
  */
-public class ContactImpl implements Contact {
+public class ContactImpl implements Contact, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private int iD;
 	private List<String> notes;
