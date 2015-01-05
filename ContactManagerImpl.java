@@ -355,7 +355,7 @@ public class ContactManagerImpl implements ContactManager {
 	public void flush() {
 		ObjectOutputStream out = null;
 		try {
-			out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("cmInfo.txt")));
+			out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("contacts.txt")));
 			out.writeObject(contacts);
 			out.writeObject(past);
 			out.writeObject(future);

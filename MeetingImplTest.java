@@ -75,7 +75,6 @@ public class MeetingImplTest {
 	    expected2.add(a);
 	    expected2.add(b);
 	    assertEquals(expected1, first.getContacts());
-		assertEquals(expected2, second.getContacts());
-			
+		assertEquals(expected2, second.getContacts());		
 	}
 }

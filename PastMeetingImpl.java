@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 
- * @author Noam
+ *  * @author Noam
  * An Implementation to PastMeeting interface.
- *
- */
+ * */
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	private static final long serialVersionUID = 987813508180475605L;
 	private List<String> notes;
@@ -39,9 +37,6 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 		return result;
 	}
 	public void addNotes(String text) {
-		notes.add(text);
-		
+		notes.add(text);	
 	}
-	
-
 }

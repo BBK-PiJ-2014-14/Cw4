@@ -9,9 +9,6 @@ import java.util.List;
  * @author Noam
  */
 public class ContactImpl implements Contact, Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private int iD;
@@ -29,14 +26,13 @@ public class ContactImpl implements Contact, Serializable{
 		this.notes = new ArrayList<String>();
 	}
 
-	/**0
+	/**
 	 *  This method return the ID of the contact.
 	 *  @return the Id of the contact.
 	 */
 	@Override
 	public int getId() {
-		return iD;
-		
+		return iD;	
 	}
 
 	/** 
@@ -61,7 +57,6 @@ public class ContactImpl implements Contact, Serializable{
 			}
 		}
 		return result;
-
 	}
 
 	/**

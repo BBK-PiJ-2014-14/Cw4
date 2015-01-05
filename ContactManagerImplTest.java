@@ -252,14 +252,14 @@ public class ContactManagerImplTest {
 		c.flush();
 		 ObjectInputStream in = null;
 	        try {
-	            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("cmInfo.txt")));
+	            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("contacts.txt"))); 
 				@SuppressWarnings("unchecked")
 				List<Contact> con = (List<Contact>) in.readObject();
 	            @SuppressWarnings("unchecked")
 				List<Meeting> past = (List<Meeting>) in.readObject();
 	            @SuppressWarnings("unchecked")
 				List<Meeting> future = (List<Meeting>) in.readObject();
-	            ContactManagerImpl d = new ContactManagerImpl(future, past, con);
+	            ContactManagerImpl d = new ContactManagerImpl(future, past, con); // creating a contactManager with the information from the file.
 	            Object[] co = d.getFutureMeeting(id).getContacts().toArray();
 	            Contact conD = (Contact)co[0]; // this should be the contact that participate in the meeting.
 	            int jd =john.getId(); // contact id.
